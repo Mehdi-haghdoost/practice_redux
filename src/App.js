@@ -1,24 +1,48 @@
-import logo from './logo.svg';
+import React, { useState } from 'react'
 import './App.css';
-
+import Todolist from './Components/Todolist';
+import { useDispatch } from 'react-redux';
+import { addTodo } from './Redux/store/todos';
 function App() {
+
+  const [title, setTitle] = useState('')
+  const dispatch = useDispatch()
+
+  const addTodoHandler = (e) => {
+    e.preventDefault()
+    dispatch(addTodo({id :1,title, isDone :false}))
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+    <>
+      <header>
+        <h1>Sabzlearn To Do List</h1>
       </header>
-    </div>
+      <form action="">
+        <input
+          type="text"
+          className="todo-input"
+          value={title}
+          onChange={e => setTitle(e.target.value)}
+        />
+        <button className="todo-button" type="submit" onClick={addTodoHandler} >
+          <i className="fas fa-plus-circle fa-lg"></i>
+        </button>
+        <div className="select">
+          <select name="todos" className="filter-todo">
+            <option value="all">All</option>
+            <option value="completed">Completed</option>
+            <option value="incomplete">Incomplete</option>
+          </select>
+        </div>
+      </form>
+
+      <div className="todo-container">
+        <ul className="todo-list">
+          <Todolist />
+        </ul>
+      </div>
+    </>
   );
 }
 
