@@ -1,12 +1,16 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import './App.css';
 import Todolist from './Components/Todolist';
 import { useDispatch } from 'react-redux';
-import { addTodo } from './Redux/store/todos';
+import { addTodo,getTodosFromServer } from './Redux/store/todos';
 function App() {
 
   const [title, setTitle] = useState('')
   const dispatch = useDispatch()
+
+  useEffect(()=>{
+    dispatch(getTodosFromServer('https://fakestoreapi.com/products'))
+  } , [])
 
   const addTodoHandler = (e) => {
     e.preventDefault()
